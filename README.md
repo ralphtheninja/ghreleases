@@ -60,6 +60,27 @@ gh.getByTag(auth, 'level', 'leveldown', 'v1.2.2', function (err, release) {
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name).
 
+### create(auth, org, repo, data[, options], callback)
+
+Create a release.
+
+```js
+var data = {
+  tag_name: '1.2.3-test',
+  name: 'Release name for 1.2.3-test',
+  body: 'Body text of release goes here'
+}
+gh.create(auth, 'level', 'leveldown', data, function (err, release) {
+  console.log(release)
+})
+```
+
+The release on GitHub would then look as follows:
+
+![1.2.3-test release](/images/github-release.png?raw=true "1.2.3-test release")
+
+GitHub [docs](https://developer.github.com/v3/repos/releases/#create-a-release)
+
 ## Community
 
 For interacting with other parts of the GitHub API, also see the following repositories/modules:

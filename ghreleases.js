@@ -15,6 +15,15 @@ function getByTag (auth, org, repo, tag, options, callback) {
   return getBase(auth, org, repo, 'tags/' + tag, options, callback)
 }
 
+function create (auth, org, repo, data, options, callback) {
+  if (typeof options == 'function') {
+    callback = options
+    options  = {}
+  }
+  var url = baseUrl(org, repo) + '/releases'
+  ghutils.ghpost(auth, url, data, options, callback)
+}
+
 function getBase (auth, org, repo, tail, options, callback) {
   if (typeof options == 'function') {
     callback = options
@@ -24,7 +33,8 @@ function getBase (auth, org, repo, tail, options, callback) {
   return ghutils.ghget(auth, url, options, callback)
 }
 
+module.exports.list      = ghrepos.createLister('releases')
 module.exports.getById   = getById
 module.exports.getLatest = getLatest
 module.exports.getByTag  = getByTag
-module.exports.list      = ghrepos.createLister('releases')
+module.exports.create    = create
