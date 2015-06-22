@@ -1,0 +1,29 @@
+{
+  "name": "ghreleases",
+  "version": "0.0.0",
+  "description": "Interact with the GitHub releases API",
+  "main": "ghreleases.js",
+  "scripts": {
+    "test": "node test.js | faucet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ralphtheninja/ghreleases.git"
+  },
+  "keywords": [
+    "github",
+    "api",
+    "releases"
+  ],
+  "author": "Magnus Skog <ralphtheninja@riseup.net>",
+  "license": "MIT",
+  "dependencies": {
+    "ghrepos": "~1.2.0",
+    "ghutils": "~3.0.0"
+  },
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "~4.0.0",
+    "xtend": "~4.0.0"
+  }
+}
