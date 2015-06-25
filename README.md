@@ -8,7 +8,7 @@
 
 ## API
 
-### list(auth, org, repo[, options], callback)
+### list(auth, org, repo[, options], cb)
 
 List all releases for a repo. Calls back with an array of releases.
 
@@ -24,7 +24,7 @@ gh.list(auth, 'level', 'leveldown', function (err, list) {
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository).
 
-### getLatest(auth, org, repo[, options], callback)
+### getLatest(auth, org, repo[, options], cb)
 
 Get latest release.
 
@@ -36,7 +36,7 @@ gh.getLatest(auth, 'level', 'leveldown', function (err, release) {
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#get-the-latest-release).
 
-### getById(auth, org, repo, id[, options], callback)
+### getById(auth, org, repo, id[, options], cb)
 
 Get data for a single release.
 
@@ -48,7 +48,7 @@ gh.getById(auth, 'level', 'leveldown', '1363866', function (err, release) {
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#get-a-single-release).
 
-### getByTag(auth, org, repo, tag[, options], callback)
+### getByTag(auth, org, repo, tag[, options], cb)
 
 Get release by tag.
 
@@ -60,15 +60,15 @@ gh.getByTag(auth, 'level', 'leveldown', 'v1.2.2', function (err, release) {
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name).
 
-### create(auth, org, repo, data[, options], callback)
+### create(auth, org, repo, data[, options], cb)
 
 Create a release.
 
 ```js
 var data = {
-  tag_name: '1.2.3-test',
-  name: 'Release name for 1.2.3-test',
-  body: 'Body text of release goes here'
+    tag_name: '1.2.3-test'
+  , name: 'Release name for 1.2.3-test'
+  , body: 'Body text of release goes here'
 }
 gh.create(auth, 'level', 'leveldown', data, function (err, release) {
   console.log(release)
@@ -80,6 +80,26 @@ The release on GitHub would then look as follows:
 ![1.2.3-test release](/images/github-release.png?raw=true "1.2.3-test release")
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#create-a-release)
+
+### uploadAssets(auth, org, repo, release, files[, options], cb)
+
+Upload assets to a release. Calls back with an array of results for each upload request.
+
+* The `release` parameter accepts either a release `id`, `'latest'` or a valid ref, e.g. `'tags/v1.0.0'`
+* The `files` parameter is an array of absolute file paths that should be uploaded and associated with this release
+
+```js
+var ref = 'tags/v1.3.0'
+  , files = [
+        '/path/to/README.md'
+      , '/path/to/prebuilt/binary.tar.gz'
+    ]
+gh.uploadAssets(auth, 'level', 'leveldown', ref, files, function (err, res) {
+  console.log(res)
+})
+```
+
+GitHub [docs](https://developer.github.com/v3/repos/releases/#upload-a-release-asset)
 
 ## Community
 
