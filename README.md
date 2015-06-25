@@ -15,7 +15,8 @@ List all releases for a repo. Calls back with an array of releases.
 ```js
 const gh   = require('ghreleases')
     , auth = {
-        token : '90230948aef88723eca2309880fea09789234'
+          token : '90230948aef88723eca2309880fea09789234'
+        , user  : 'ralphtheninja'
       }
 gh.list(auth, 'level', 'leveldown', function (err, list) {
   console.log(list)
