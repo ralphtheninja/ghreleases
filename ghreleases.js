@@ -1,18 +1,29 @@
-const ghrepos = require('ghrepos')
-    , ghutils = require('ghutils')
-    , baseUrl = ghrepos.baseUrl
+const ghrepos  = require('ghrepos')
+    , ghutils  = require('ghutils')
+    , after    = require('after')
+    , xtend    = require('xtend')
+    , template = require('url-template')
+    , basename = require('path').basename
+    , fs       = require('fs')
+    , getMime  = require('simple-mime')('application/octet-stream')
+    , ghget    = ghutils.ghget
+    , ghpost   = ghutils.ghpost
 
 
-function getById (auth, org, repo, id, options, callback) {
-  return getBase(auth, org, repo, id, options, callback)
-}
+    , baseUrl  = function (org, repo) {
+      return ghrepos.baseUrl(org, repo) + '/releases'
+    }
 
 function getLatest (auth, org, repo, options, callback) {
-  return getBase(auth, org, repo, 'latest', options, callback)
+  getBase(auth, org, repo, 'latest', options, callback)
+}
+
+function getById (auth, org, repo, id, options, callback) {
+  getBase(auth, org, repo, id, options, callback)
 }
 
 function getByTag (auth, org, repo, tag, options, callback) {
-  return getBase(auth, org, repo, 'tags/' + tag, options, callback)
+  getBase(auth, org, repo, 'tags/' + tag, options, callback)
 }
 
 function create (auth, org, repo, data, options, callback) {
@@ -20,8 +31,57 @@ function create (auth, org, repo, data, options, callback) {
     callback = options
     options  = {}
   }
-  var url = baseUrl(org, repo) + '/releases'
-  ghutils.ghpost(auth, url, data, options, callback)
+  ghutils.ghpost(auth, baseUrl(org, repo), data, options, callback)
+}
+
+function uploadAssets (auth, org, repo, tail, files, options, callback) {
+  if (typeof options == 'function') {
+    callback = options
+    options  = {}
+  }
+
+  if (typeof files == 'string')
+    files = [ files ]
+
+  getBase(auth, org, repo, tail, options, function (err, release) {
+    if (err)
+      return callback(err)
+
+    if (typeof release.upload_url != 'string')
+      return callback(new Error('invalid upload_url'))
+
+    var results = []
+
+    var done = after(files.length, function (err) {
+      callback(err, results)
+    })
+
+    var assetTemplate = template.parse(release.upload_url)
+
+    files.forEach(function (path) {
+      fs.stat(path, function (err, stats) {
+        if (err || !stats)
+          return done(err || new Error('failed to get file stats'))
+
+        if (stats.isDirectory())
+          return done(new Error('can only upload files'))
+
+        options = xtend(options, {
+          headers: {
+              'content-length' : stats.size
+            , 'content-type'   : getMime(path)
+          }
+        })
+
+        var name = basename(path)
+        var uploadUrl = assetTemplate.expand({ name: name })
+        ghpost(auth, uploadUrl, fs.createReadStream(path), options, function (err, result) {
+          if (!err) results.push(result)
+          done(err)
+        })
+      })
+    })
+ })
 }
 
 function getBase (auth, org, repo, tail, options, callback) {
@@ -29,12 +89,13 @@ function getBase (auth, org, repo, tail, options, callback) {
     callback = options
     options  = {}
   }
-  var url = baseUrl(org, repo) + '/releases/' + tail
-  return ghutils.ghget(auth, url, options, callback)
+  var url = baseUrl(org, repo) + '/' + tail
+  ghget(auth, url, options, callback)
 }
 
-module.exports.list      = ghrepos.createLister('releases')
-module.exports.getById   = getById
-module.exports.getLatest = getLatest
-module.exports.getByTag  = getByTag
-module.exports.create    = create
+module.exports.list         = ghrepos.createLister('releases')
+module.exports.getLatest    = getLatest
+module.exports.getById      = getById
+module.exports.getByTag     = getByTag
+module.exports.create       = create
+module.exports.uploadAssets = uploadAssets
