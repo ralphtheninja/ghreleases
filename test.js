@@ -36,3 +36,65 @@ test('test list releases for org/repo with multi-page', function (t) {
     ]))
     .on('close'  , ghutils.verifyClose(t))
 })
+
+test('get latest release', function (t) {
+  t.plan(7)
+
+  var auth     = { user: 'authuser', token: 'authtoken' }
+    , org      = 'testorg'
+    , repo     = 'testrepo'
+    , testData = { test: 'data' }
+    , server
+
+  server = ghutils.makeServer(testData)
+    .on('ready', function () {
+      ghreleases.getLatest(xtend(auth), org, repo, ghutils.verifyData(t, testData))
+    })
+    .on('request', ghutils.verifyRequest(t, auth))
+    .on('get', ghutils.verifyUrl(t, [
+      'https://api.github.com/repos/' + org + '/' + repo + '/releases/latest'
+    ]))
+    .on('close'  , ghutils.verifyClose(t))
+})
+
+test('get release by id', function (t) {
+  t.plan(7)
+
+  var auth     = { user: 'authuser', token: 'authtoken' }
+    , org      = 'testorg'
+    , repo     = 'testrepo'
+    , testData = { test: 'data' }
+    , id       = 314
+    , server
+
+  server = ghutils.makeServer(testData)
+    .on('ready', function () {
+      ghreleases.getById(xtend(auth), org, repo, id, ghutils.verifyData(t, testData))
+    })
+    .on('request', ghutils.verifyRequest(t, auth))
+    .on('get', ghutils.verifyUrl(t, [
+      'https://api.github.com/repos/' + org + '/' + repo + '/releases/' + id
+    ]))
+    .on('close'  , ghutils.verifyClose(t))
+})
+
+test('get release by tag', function (t) {
+  t.plan(7)
+
+  var auth     = { user: 'authuser', token: 'authtoken' }
+    , org      = 'testorg'
+    , repo     = 'testrepo'
+    , testData = { test: 'data' }
+    , tag      = 'v1.0.0'
+    , server
+
+  server = ghutils.makeServer(testData)
+    .on('ready', function () {
+      ghreleases.getByTag(xtend(auth), org, repo, tag, ghutils.verifyData(t, testData))
+    })
+    .on('request', ghutils.verifyRequest(t, auth))
+    .on('get', ghutils.verifyUrl(t, [
+      'https://api.github.com/repos/' + org + '/' + repo + '/releases/tags/' + tag
+    ]))
+    .on('close'  , ghutils.verifyClose(t))
+})
