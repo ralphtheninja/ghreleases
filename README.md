@@ -24,18 +24,6 @@ gh.list(auth, 'level', 'leveldown', function (err, list) {
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository).
 
-### getById(auth, org, repo, id[, options], callback)
-
-Get data for a single release.
-
-```js
-gh.getById(auth, 'level', 'leveldown', '1363866', function (err, release) {
-  console.log(release)
-})
-```
-
-GitHub [docs](https://developer.github.com/v3/repos/releases/#get-a-single-release).
-
 ### getLatest(auth, org, repo[, options], callback)
 
 Get latest release.
@@ -47,6 +35,18 @@ gh.getLatest(auth, 'level', 'leveldown', function (err, release) {
 ```
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#get-the-latest-release).
+
+### getById(auth, org, repo, id[, options], callback)
+
+Get data for a single release.
+
+```js
+gh.getById(auth, 'level', 'leveldown', '1363866', function (err, release) {
+  console.log(release)
+})
+```
+
+GitHub [docs](https://developer.github.com/v3/repos/releases/#get-a-single-release).
 
 ### getByTag(auth, org, repo, tag[, options], callback)
 
