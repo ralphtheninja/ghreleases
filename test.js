@@ -2,7 +2,7 @@ const ghutils    = require('ghutils/test-util')
     , ghreleases = require('./')
     , test       = require('tape')
     , xtend      = require('xtend')
-
+    , path       = require('path')
 
 test('test list releases for org/repo with multi-page', function (t) {
   t.plan(13)
@@ -122,6 +122,37 @@ test('create release', function (t) {
     ]))
     .on('post', function (url, data) {
       t.deepEqual(data, testData)
+    })
+    .on('close'  , ghutils.verifyClose(t))
+})
+
+test('uploading assets', function (t) {
+  t.plan(15)
+
+  var auth      = { user: 'authuser', token: 'authtoken' }
+    , org       = 'testorg'
+    , repo      = 'testrepo'
+    , testData  = [
+          { upload_url: 'https://upload_url/path{?name}' }
+        , { test5: 'data5' }
+        , { test6: 'data6' }
+      ]
+    , ref       = 'tags/v1.3.0'
+    , files     = [ 'test.js', 'README.md' ]
+    , postCount = 0
+    , server
+
+  server = ghutils.makeServer(testData)
+    .on('ready', function () {
+      ghreleases.uploadAssets(xtend(auth), org, repo, ref, files, ghutils.verifyData(t, [ testData[1], testData[2] ]))
+    })
+    .on('request', ghutils.verifyRequest(t, auth))
+    .on('get', ghutils.verifyUrl(t, [
+      'https://api.github.com/repos/' + org + '/' + repo + '/releases/' + ref
+    ]))
+    .on('post', function (url, data, options) {
+      t.equal(url, 'https://upload_url/path?name=' + files[postCount++])
+      t.equal(typeof data.pipe, 'function', 'should be a stream')
     })
     .on('close'  , ghutils.verifyClose(t))
 })
