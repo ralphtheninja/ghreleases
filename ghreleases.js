@@ -66,7 +66,7 @@ function uploadAssets (auth, org, repo, tail, files, options, callback) {
         if (stats.isDirectory())
           return done(new Error('can only upload files'))
 
-        options = xtend(options, {
+        var opts = xtend(options, {
           headers: {
               'content-length' : stats.size
             , 'content-type'   : getMime(path)
@@ -75,7 +75,8 @@ function uploadAssets (auth, org, repo, tail, files, options, callback) {
 
         var name = basename(path)
         var uploadUrl = assetTemplate.expand({ name: name })
-        ghpost(auth, uploadUrl, fs.createReadStream(path), options, function (err, result) {
+
+        ghpost(auth, uploadUrl, fs.createReadStream(path), opts, function (err, result) {
           if (!err) results.push(result)
           done(err)
         })
