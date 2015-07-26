@@ -1,6 +1,6 @@
 {
   "name": "ghreleases",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Interact with the GitHub releases API",
   "main": "ghreleases.js",
   "scripts": {
