@@ -22,11 +22,11 @@
     "ghrepos": "~1.2.0",
     "ghutils": "~3.0.0",
     "simple-mime": "~0.1.0",
-    "url-template": "~2.0.6"
+    "url-template": "~2.0.6",
+    "xtend": "~4.0.0"
   },
   "devDependencies": {
     "faucet": "0.0.1",
-    "tape": "~4.0.0",
-    "xtend": "~4.0.0"
+    "tape": "~4.0.0"
   }
 }
