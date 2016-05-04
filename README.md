@@ -1,23 +1,19 @@
-# ghreleases
+# ghreleases [![Build Status](https://secure.travis-ci.org/ralphtheninja/ghreleases.png)](http://travis-ci.org/ralphtheninja/ghreleases) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-[![Build Status](https://secure.travis-ci.org/ralphtheninja/ghreleases.png)](http://travis-ci.org/ralphtheninja/ghreleases)
-
-**A node library to interact with the GitHub releases API**
-
-[![NPM](https://nodei.co/npm/ghreleases.png?mini=true)](https://nodei.co/npm/ghreleases/)
+A node library to interact with the GitHub releases API.
 
 ## API
 
-### list(auth, org, repo[, options], cb)
+#### list(auth, org, repo[, options], cb)
 
 List all releases for a repo. Calls back with an array of releases.
 
 ```js
-const gh   = require('ghreleases')
-    , auth = {
-          token : '90230948aef88723eca2309880fea09789234'
-        , user  : 'ralphtheninja'
-      }
+const gh = require('ghreleases')
+const auth = {
+  token: '90230948aef88723eca2309880fea09789234',
+  user: 'ralphtheninja'
+}
 gh.list(auth, 'level', 'leveldown', function (err, list) {
   console.log(list)
 })
@@ -25,7 +21,7 @@ gh.list(auth, 'level', 'leveldown', function (err, list) {
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository).
 
-### getLatest(auth, org, repo[, options], cb)
+#### getLatest(auth, org, repo[, options], cb)
 
 Get latest release.
 
@@ -37,7 +33,7 @@ gh.getLatest(auth, 'level', 'leveldown', function (err, release) {
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#get-the-latest-release).
 
-### getById(auth, org, repo, id[, options], cb)
+#### getById(auth, org, repo, id[, options], cb)
 
 Get data for a single release.
 
@@ -49,7 +45,7 @@ gh.getById(auth, 'level', 'leveldown', '1363866', function (err, release) {
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#get-a-single-release).
 
-### getByTag(auth, org, repo, tag[, options], cb)
+#### getByTag(auth, org, repo, tag[, options], cb)
 
 Get release by tag.
 
@@ -61,15 +57,15 @@ gh.getByTag(auth, 'level', 'leveldown', 'v1.2.2', function (err, release) {
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name).
 
-### create(auth, org, repo, data[, options], cb)
+#### create(auth, org, repo, data[, options], cb)
 
 Create a release.
 
 ```js
-var data = {
-    tag_name: '1.2.3-test'
-  , name: 'Release name for 1.2.3-test'
-  , body: 'Body text of release goes here'
+const data = {
+  tag_name: '1.2.3-test',
+  name: 'Release name for 1.2.3-test',
+  body: 'Body text of release goes here'
 }
 gh.create(auth, 'level', 'leveldown', data, function (err, release) {
   console.log(release)
@@ -82,7 +78,7 @@ The release on GitHub would then look as follows:
 
 GitHub [docs](https://developer.github.com/v3/repos/releases/#create-a-release)
 
-### uploadAssets(auth, org, repo, release, files[, options], cb)
+#### uploadAssets(auth, org, repo, release, files[, options], cb)
 
 Upload assets to a release. Calls back with an array of results for each upload request.
 
@@ -90,11 +86,11 @@ Upload assets to a release. Calls back with an array of results for each upload 
 * The `files` parameter is an array of absolute file paths that should be uploaded and associated with this release
 
 ```js
-var ref = 'tags/v1.3.0'
-  , files = [
-        '/path/to/README.md'
-      , '/path/to/prebuilt/binary.tar.gz'
-    ]
+const ref = 'tags/v1.3.0'
+const files = [
+  '/path/to/README.md',
+  '/path/to/prebuilt/binary.tar.gz'
+]
 gh.uploadAssets(auth, 'level', 'leveldown', ref, files, function (err, res) {
   console.log(res)
 })
