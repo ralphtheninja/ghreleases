@@ -4,7 +4,7 @@
   "description": "Interact with the GitHub releases API",
   "main": "ghreleases.js",
   "scripts": {
-    "test": "node test.js | faucet"
+    "test": "standard && node test.js | faucet"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "faucet": "0.0.1",
+    "standard": "^7.0.0",
     "tape": "^4.5.1"
   }
 }
