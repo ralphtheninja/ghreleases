@@ -1,5 +1,7 @@
 # ghreleases [![Build Status](https://secure.travis-ci.org/ralphtheninja/ghreleases.png)](http://travis-ci.org/ralphtheninja/ghreleases) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ralphtheninja/ghreleases.svg)](https://greenkeeper.io/)
+
 A node library to interact with the GitHub releases API.
 
 ## API
