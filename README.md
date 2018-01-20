@@ -2,6 +2,7 @@
 
 > Interact with the GitHub releases API.
 
+![Node version](https://img.shields.io/node/v/ghreleases.svg)
 [![Build Status](https://secure.travis-ci.org/ralphtheninja/ghreleases.png)](http://travis-ci.org/ralphtheninja/ghreleases)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
