@@ -41,7 +41,7 @@ function uploadAssets (auth, org, repo, tail, files, options, callback) {
 
   if (typeof files === 'string') files = [ files ]
 
-  getBase(auth, org, repo, tail, options, function (err, release) {
+  getBase(auth, org, repo, tail, options, (err, release) => {
     if (err) return callback(err)
 
     if (typeof release.upload_url !== 'string') {
@@ -49,15 +49,11 @@ function uploadAssets (auth, org, repo, tail, files, options, callback) {
     }
 
     const results = []
-
-    const done = after(files.length, function (err) {
-      callback(err, results)
-    })
-
+    const done = after(files.length, err => callback(err, results))
     const assetTemplate = template.parse(release.upload_url)
 
-    files.forEach(function (path) {
-      fs.stat(path, function (err, stats) {
+    files.forEach(path => {
+      fs.stat(path, (err, stats) => {
         if (err || !stats) {
           return done(err || new Error('failed to get file stats'))
         }
@@ -74,8 +70,7 @@ function uploadAssets (auth, org, repo, tail, files, options, callback) {
         })
 
         const uploadUrl = assetTemplate.expand({ name: basename(path) })
-
-        ghpost(auth, uploadUrl, fs.createReadStream(path), opts, function (err, result) {
+        ghpost(auth, uploadUrl, fs.createReadStream(path), opts, (err, result) => {
           if (!err) results.push(result)
           done(err)
         })
