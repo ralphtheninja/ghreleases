@@ -48,13 +48,13 @@ function uploadAssets (auth, org, repo, tail, files, options, callback) {
       return callback(new Error('invalid upload_url'))
     }
 
-    var results = []
+    const results = []
 
-    var done = after(files.length, function (err) {
+    const done = after(files.length, function (err) {
       callback(err, results)
     })
 
-    var assetTemplate = template.parse(release.upload_url)
+    const assetTemplate = template.parse(release.upload_url)
 
     files.forEach(function (path) {
       fs.stat(path, function (err, stats) {
@@ -66,15 +66,14 @@ function uploadAssets (auth, org, repo, tail, files, options, callback) {
           return done(new Error('can only upload files'))
         }
 
-        var opts = xtend(options, {
+        const opts = xtend(options, {
           headers: {
             'content-length': stats.size,
             'content-type': getMime(path)
           }
         })
 
-        var name = basename(path)
-        var uploadUrl = assetTemplate.expand({ name: name })
+        const uploadUrl = assetTemplate.expand({ name: basename(path) })
 
         ghpost(auth, uploadUrl, fs.createReadStream(path), opts, function (err, result) {
           if (!err) results.push(result)
@@ -90,7 +89,7 @@ function getBase (auth, org, repo, tail, options, callback) {
     callback = options
     options = {}
   }
-  var url = baseUrl(org, repo) + '/' + tail
+  const url = baseUrl(org, repo) + '/' + tail
   ghget(auth, url, options, callback)
 }
 
