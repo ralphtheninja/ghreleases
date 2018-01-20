@@ -20,7 +20,7 @@ const auth = {
   token: '90230948aef88723eca2309880fea09789234',
   user: 'ralphtheninja'
 }
-gh.list(auth, 'level', 'leveldown', function (err, list) {
+gh.list(auth, 'level', 'leveldown', (err, list) => {
   console.log(list)
 })
 ```
@@ -32,7 +32,7 @@ GitHub [docs](https://developer.github.com/v3/repos/releases/#list-releases-for-
 Get latest release.
 
 ```js
-gh.getLatest(auth, 'level', 'leveldown', function (err, release) {
+gh.getLatest(auth, 'level', 'leveldown', (err, release) => {
   console.log(release)
 })
 ```
@@ -44,7 +44,7 @@ GitHub [docs](https://developer.github.com/v3/repos/releases/#get-the-latest-rel
 Get data for a single release.
 
 ```js
-gh.getById(auth, 'level', 'leveldown', '1363866', function (err, release) {
+gh.getById(auth, 'level', 'leveldown', '1363866', (err, release) => {
   console.log(release)
 })
 ```
@@ -56,7 +56,7 @@ GitHub [docs](https://developer.github.com/v3/repos/releases/#get-a-single-relea
 Get release by tag.
 
 ```js
-gh.getByTag(auth, 'level', 'leveldown', 'v1.2.2', function (err, release) {
+gh.getByTag(auth, 'level', 'leveldown', 'v1.2.2', (err, release) => {
   console.log(release)
 })
 ```
@@ -73,7 +73,7 @@ const data = {
   name: 'Release name for 1.2.3-test',
   body: 'Body text of release goes here'
 }
-gh.create(auth, 'level', 'leveldown', data, function (err, release) {
+gh.create(auth, 'level', 'leveldown', data, (err, release) => {
   console.log(release)
 })
 ```
@@ -97,7 +97,7 @@ const files = [
   '/path/to/README.md',
   '/path/to/prebuilt/binary.tar.gz'
 ]
-gh.uploadAssets(auth, 'level', 'leveldown', ref, files, function (err, res) {
+gh.uploadAssets(auth, 'level', 'leveldown', ref, files, (err, res) => {
   console.log(res)
 })
 ```
