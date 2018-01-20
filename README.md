@@ -2,9 +2,11 @@
 
 > Interact with the GitHub releases API.
 
-![Node version](https://img.shields.io/node/v/ghreleases.svg)
-[![Build Status](https://secure.travis-ci.org/ralphtheninja/ghreleases.png)](http://travis-ci.org/ralphtheninja/ghreleases)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+![node](https://img.shields.io/node/v/ghreleases.svg)
+[![travis](https://secure.travis-ci.org/ralphtheninja/ghreleases.png)](http://travis-ci.org/ralphtheninja/ghreleases)
+[![david](https://david-dm.org/ralphtheninja/ghreleases.svg)](https://david-dm.org/ralphtheninja/ghreleases)
+[![standard](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![npm](https://img.shields.io/npm/dm/ghreleases.svg)](https://www.npmjs.com/package/ghreleases)
 
 ## API
 
