@@ -2,6 +2,7 @@
 
 > Interact with the GitHub releases API.
 
+[![npm](https://img.shields.io/npm/v/ghreleases.svg)](https://www.npmjs.com/package/ghreleases)
 ![node](https://img.shields.io/node/v/ghreleases.svg)
 [![travis](https://secure.travis-ci.org/ralphtheninja/ghreleases.png)](http://travis-ci.org/ralphtheninja/ghreleases)
 [![david](https://david-dm.org/ralphtheninja/ghreleases.svg)](https://david-dm.org/ralphtheninja/ghreleases)
