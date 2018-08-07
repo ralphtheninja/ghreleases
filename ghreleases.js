@@ -3,6 +3,7 @@ const ghutils = require('ghutils')
 const after = require('after')
 const xtend = require('xtend')
 const template = require('url-template')
+const uniq = require('lodash.uniq')
 const basename = require('path').basename
 const fs = require('fs')
 const getMime = require('simple-mime')('application/octet-stream')
@@ -40,6 +41,8 @@ function uploadAssets (auth, org, repo, tail, files, options, callback) {
   }
 
   if (typeof files === 'string') files = [ files ]
+
+  files = uniq(files)
 
   getBase(auth, org, repo, tail, options, (err, release) => {
     if (err) return callback(err)

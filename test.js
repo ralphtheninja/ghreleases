@@ -121,7 +121,7 @@ test('create release', t => {
 })
 
 test('uploading assets', t => {
-  t.plan(15)
+  t.plan(16)
 
   const auth = { user: 'authuser', token: 'authtoken' }
   const org = 'testorg'
@@ -132,7 +132,7 @@ test('uploading assets', t => {
     { test6: 'data6' }
   ]
   const ref = 'tags/v1.3.0'
-  const files = [ 'test.js', 'README.md' ]
+  const files = [ 'test.js', 'README.md', 'test.js' ]
   var postCount = 0
 
   ghutils.makeServer(testData)
@@ -147,5 +147,8 @@ test('uploading assets', t => {
       t.equal(url, 'https://upload_url/path?name=' + files[postCount++])
       t.equal(typeof data.pipe, 'function', 'should be a stream')
     })
-    .on('close', ghutils.verifyClose(t))
+    .on('close', () => {
+      t.is(postCount, 2, 'only two files')
+      ghutils.verifyClose(t)()
+    })
 })
