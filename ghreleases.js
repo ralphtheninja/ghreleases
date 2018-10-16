@@ -1,7 +1,6 @@
 const ghrepos = require('ghrepos')
 const ghutils = require('ghutils')
 const after = require('after')
-const xtend = require('xtend')
 const template = require('url-template')
 const uniq = require('lodash.uniq')
 const basename = require('path').basename
@@ -65,7 +64,7 @@ function uploadAssets (auth, org, repo, tail, files, options, callback) {
           return done(new Error('can only upload files'))
         }
 
-        const opts = xtend(options, {
+        const opts = Object.assign({}, options, {
           headers: {
             'content-length': stats.size,
             'content-type': getMime(path)
